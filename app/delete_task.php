@@ -1,24 +1,26 @@
 <?php
 session_start();
+include "DB.php";
 
-$host = "localhost";
-$user = "root";
-$password = "";
-$dbname = "todo_db";
-
-// Connexion
-$conn = mysqli_connect($host, $user, $password, $dbname);
-if (!$conn) {
-    die("Erreur de connexion : " . mysqli_connect_error());
-}
-mysqli_set_charset($conn, "utf8");
-
-// Vérifier l'ID
-if(!isset($_GET['id'])) {
-    $_SESSION['error'] = "ID de tâche manquant !";
+if (!isset($_GET['id'])) {
+    $_SESSION['error'] = "ID manquant";
     header("Location: index.php");
     exit();
 }
+
+$id = intval($_GET['id']);
+
+$sql = "DELETE FROM tasks WHERE id=$id";
+
+if (mysqli_query($conn, $sql)) {
+    $_SESSION['message'] = "Tache supprimee";
+} else {
+    $_SESSION['error'] = mysqli_error($conn);
+}
+
+header("Location: index.php");
+exit();
+
 
 $id = intval($_GET['id']);
 

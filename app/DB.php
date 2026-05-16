@@ -1,14 +1,13 @@
 <?php
-$host = "localhost";
-$user = "root";
-$password = "";
-$dbname = "todo_db";
 
-$conn = mysqli_connect($host, $user, $password, $dbname);
+$conn = mysqli_connect(
+    "db",
+    "task_user",
+    "task_password",
+    "tasks"
+);
 
 if (!$conn) {
-    die("Erreur : " . mysqli_connect_error());
+    die("Connection failed: " . mysqli_connect_error());
 }
-
-mysqli_set_charset($conn, "utf8");
 ?>
